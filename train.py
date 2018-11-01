@@ -3,6 +3,7 @@ from utils import *
 import pickle
 import argparse
 from os.path import join
+from sklearn.metrics import classification_report
 
 parser = argparse.ArgumentParser(description='Train model')
 parser.add_argument('--x_train_dir', default='.', help='Directory with train images')
@@ -52,3 +53,10 @@ data = {
 
 with open(join(args.model_output_dir, 'model.pickle'), 'wb') as f:
     pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
+X_t_m = generate_moments(images, basis)
+X_t = add_bias(X_t_m, norms)
+
+
+y_pred = predict_all(X_t, w_opt)
+print(classification_report(y, y_pred, digits=3))

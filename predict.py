@@ -26,9 +26,6 @@ norms = data['norms']
 X_test_m = generate_moments(images_test, basis)
 X_test = add_bias(X_test_m, norms)
 
-def predict_all(X, wall):
-    a = np.argmax(X.dot(wall), axis=1)
-    return a
 
 y_pred = predict_all(X_test, w_opt)
 

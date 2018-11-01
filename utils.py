@@ -145,7 +145,7 @@ class Softmax:
             return self.gradient_analitic(w.reshape(W_shape), lambda_coef).reshape(-1)
         if w_approx is None:
             w_approx = np.zeros(np.prod(W_shape))
-        if lambda_coef > 1e-7:
+        if lambda_coef > 3.5e-5:
             w_opt = minimize(wrapped_loss,
                              x0=w_approx,
                              jac=wrapped_jac,
@@ -156,3 +156,7 @@ class Softmax:
             w_opt = self.descent(lambda_coef, max_it=1000)
 
         return w_opt.reshape(W_shape)
+
+def predict_all(X, wall):
+    a = np.argmax(X.dot(wall), axis=1)
+    return a
